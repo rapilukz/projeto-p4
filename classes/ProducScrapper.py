@@ -1,3 +1,6 @@
+import pandas as pd
+from selenium import webdriver
+
 class ProductScraper():
     def __init__(self, product, storeName, URL):
         self.product = product
