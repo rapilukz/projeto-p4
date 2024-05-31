@@ -1,3 +1,13 @@
+import time
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+from product_scraper import ProductScraper
+
 class pcDigaScraper(ProductScraper):
     def closeCookies(self):
         pass
@@ -37,23 +47,23 @@ class pcDigaScraper(ProductScraper):
             print(price.text)
             
             #get rating
-            ratingsButtonXpath = '//*[@id="tablist-component-tab-tablist-tab-2"]'
-            scoreXpath = '//*[@id="tp-widget-wrapper"]/div/div[1]/div[1]/div[2]/span[1]'
+            # ratingsButtonXpath = '//*[@id="tablist-component-tab-tablist-tab-2"]'
+            # scoreXpath = '//*[@id="tp-widget-wrapper"]/div/div[1]/div[1]/div[2]/span[1]'
 
-            ratingButton = self.driver.find_element(By.XPATH, ratingsButtonXpath)
-            ratingButton.click()
+            # ratingButton = self.driver.find_element(By.XPATH, ratingsButtonXpath)
+            # ratingButton.click()
 
-            # Wait for the rating element and get the text
-            try:
-                rating = WebDriverWait(self.driver, 3).until(
-                    EC.presence_of_element_located((By.XPATH, scoreXpath))
-                )
-                rating_value = rating.text
-            except TimeoutException:
-                rating_value = 'NULL'
+            # # Wait for the rating element and get the text
+            # try:
+            #     rating = WebDriverWait(self.driver, 3).until(
+            #         EC.presence_of_element_located((By.XPATH, scoreXpath))
+            #     )
+            #     rating_value = rating.text
+            # except TimeoutException:
+            #     rating_value = 'NULL'
 
 
-            print(f"Rating: {rating_value}/5")
+            # print(f"Rating: {rating_value}/5")
             
             
             #get reviews
@@ -64,3 +74,13 @@ class pcDigaScraper(ProductScraper):
 
             print("----------------")
             time.sleep(1)
+
+def main():
+    x = pcDigaScraper("mouse gamer","PCDiga", "https://www.pcdiga.com/")
+    x.openPage()
+    x.searchProduct()
+    time.sleep(1)
+    x.scrape()
+    
+if __name__ == "__main__":
+    main()
