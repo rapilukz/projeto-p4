@@ -1,3 +1,4 @@
+from time import sleep
 import pandas as pd
 from selenium import webdriver
 from classes.product_scraper import ProductScraper
@@ -18,7 +19,14 @@ class AmazonScraper(ProductScraper):
         search_bar = self.driver.find_element(By.ID, "twotabsearchtextbox")
         search_bar.click()
         search_bar.send_keys(item)
+        sleep(1)
         search_bar.send_keys(Keys.RETURN)
+
+        info = self.get_item_info()
+    
+    def get_item_info(self):
+        product = self.driver.find_element(By.XPATH, "//span[@class='a-size-medium a-color-base a-text-normal']")
+        product.click()
 
     def solve_captcha(self):
         self.driver.get("https://www.amazon.com/errors/validateCaptcha")

@@ -7,7 +7,7 @@ Um Web scrapper a 6 sites que vai pegar 20 produtos em cada site e no fim juntar
 - Nanochip
 - Pc Componentes
 - Chip 7
-- 
+- Fnac?
 
 ### Package Necessárias
 

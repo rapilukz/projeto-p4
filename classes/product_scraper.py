@@ -20,6 +20,9 @@ class ProductScraper():
 
     def goToNextPage(self):
         pass
+
+    def got_back(self):
+        self.driver.back()
     
     def print_details(self):
         print(f"The store name is {self.storeName}")
