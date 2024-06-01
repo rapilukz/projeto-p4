@@ -38,3 +38,7 @@ class ProductScraper():
     #Pseudo abstract method xdd
     def scrape(self):
         pass
+
+    def add_item(self, name, category, price, store, ratings, reviews, reviews_nr):
+        new_row = { "name": name, "category": category, "price": price, "store": store, "ratings": ratings, "reviews": reviews, "reviews_nr": reviews_nr }
+        self.df = pd.concat([self.df, pd.DataFrame([new_row])], ignore_index=True)
