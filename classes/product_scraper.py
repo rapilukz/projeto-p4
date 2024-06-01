@@ -3,9 +3,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 class ProductScraper():
-    def __init__(self, storeName, URL):
+    def __init__(self, product, storeName, URL):
         self.storeName = storeName
         self.URL = URL
+        self.product = product
         self.df = pd.DataFrame(columns=["name", "category", "price", "store", "ratings", "reviews", "reviews_nr"])
 
     def to_csv(self, fileName):
