@@ -10,4 +10,4 @@ items = ["motherboard", "processor", "ram", "gpu", "psu", "case",
          "webcam", "speakers", "printer", "scanner", "router", "switch", "access point", "cable"]
 
 
-amazon.search_item()
+amazon.search_item("ryzen 5 3600x")

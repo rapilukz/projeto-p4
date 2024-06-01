@@ -1,5 +1,6 @@
 import pandas as pd
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 class ProductScraper():
     def __init__(self, storeName, URL):
@@ -26,7 +27,9 @@ class ProductScraper():
         # print(self.driver)
 
     def openPage(self):
-        self.driver = webdriver.Chrome()
+        chrome_options = Options()
+        chrome_options.add_experimental_option("detach", True)
+        self.driver = webdriver.Chrome(options=chrome_options)
         self.driver.get(self.URL)
         
     #Pseudo abstract method xdd
