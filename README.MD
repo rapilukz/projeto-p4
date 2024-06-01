@@ -2,12 +2,12 @@
 Um Web scrapper a 6 sites que vai pegar 20 produtos em cada site e no fim juntar tudo num ficheiro .csv
 
 ### Sites
-- Amazon (Gabriel)
-- PCDiga (Sebastian)
-- Nanochip
-- Pc Componentes
-- Chip 7
-- Fnac?
+- [x] Amazon (Gabriel)
+- [ ] PCDiga (Sebastian)
+- [ ] Nanochip
+- [ ] Pc Componentes
+- [ ] Chip 7
+- [ ] Fnac?
 
 ### Package Necessárias
 
