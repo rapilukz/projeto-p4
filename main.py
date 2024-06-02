@@ -1,5 +1,5 @@
 from classes.amazon import AmazonScraper
-from classes.globaldata import GlobalDataScraper
+from classes.worten import WortenScrapper
 
 ## Example of how to use the AmazonScraper class
 # amazon = AmazonScraper("ryzen 5 3600x")
@@ -8,9 +8,7 @@ from classes.globaldata import GlobalDataScraper
 # finally:
 #     amazon.close_browser()
 
-## Example of how to use the GlobalDataScraper class
-globaldata = GlobalDataScraper("ryzen 5")
-try:
-    globaldata.scrape()
-finally:
-    globaldata.driver.quit()
+## Example of how to use the WortenScrapper class
+worten = WortenScrapper("ryzen 5 3600")
+worten.scrape()
+
