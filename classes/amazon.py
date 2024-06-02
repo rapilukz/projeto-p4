@@ -13,7 +13,7 @@ class AmazonScraper(ProductScraper):
         self.search_item()
         self.scrape_items()
         self.to_csv("amazon.csv")
-        self.driver.quit()
+        self.close_browser()
 
     def open_browser(self):
         self.openPage()
