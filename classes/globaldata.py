@@ -13,29 +13,25 @@ class GlobalDataScraper(ProductScraper):
         self.scrape_items()
 
     def open_browser(self):
-        self.openPage()
+        self.open_sealth_browser()
         self.close_cookies()
 
     def scrape_items(self):
         sleep(1)
-        # items_number = self.driver.find_element(By.CSS_SELECTOR, ".ais-Stats-text strong").text
-
         links = self.get_links()
         print(f"Found {len(links)} items")
         for link in links:
             self.driver.get(link)
             info = self.get_item_info()
             # self.add_item(info["name"], "Computer Parts", info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
-            sleep(1)
 
     def get_item_info(self):
-        return "N/A"
+        name = self.driver.find_element(By.CSS_SELECTOR, "h1.mb-0.h4.h2-md").text
+        print("Scrapping: ", name)
 
     def close_cookies(self):
-        try:
-            self.driver.find_element(By.ID, "CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").click()
-        except:
-            pass
+        print('Closing cookies')
+        self.driver.find_element(By.ID, "CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").click()
 
     def search_item(self):
         sleep(1)
@@ -50,8 +46,7 @@ class GlobalDataScraper(ProductScraper):
         products = self.driver.find_elements(By.CSS_SELECTOR, "[data-widget='hits'] .row")
         # only loop through the first 20 products
         for product in products[:20]:
-            partial_link = product.find_element(By.CSS_SELECTOR, "a.text-inherit.text-decoration-none.js-gtm-product-link-algolia").get_attribute("href")
-            link = f"{self.driver.current_url}{partial_link}"
+            link = product.find_element(By.CSS_SELECTOR, "a.text-inherit.text-decoration-none.js-gtm-product-link-algolia").get_attribute("href")
             links.append(link)
     
         return links

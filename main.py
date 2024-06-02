@@ -10,7 +10,7 @@ from classes.globaldata import GlobalDataScraper
 
 ## Example of how to use the GlobalDataScraper class
 globaldata = GlobalDataScraper("ryzen 5")
-# try:
-globaldata.scrape()
-# finally:
-#     globaldata.close_browser()
+try:
+    globaldata.scrape()
+finally:
+    globaldata.driver.quit()
