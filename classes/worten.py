@@ -2,10 +2,12 @@ from time import sleep
 from classes.product_scraper import ProductScraper
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class WortenScrapper(ProductScraper):
     def __init__(self, product):
-        super().__init__(product, "Worten   ", "https://www.worten.pt/")
+        super().__init__(product, "Worten", "https://www.worten.pt/")
 
     def open_browser(self):
         self.openPage()
@@ -28,10 +30,14 @@ class WortenScrapper(ProductScraper):
 
     def get_item_info(self):
         sleep(1)
-        product_name = self.driver.find_element(By.CSS_SELECTOR, ".title").text
+        product_name = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, ".title"))
+        ).text
         print('Scraping: ', product_name)
+        
         unformated_price = self.driver.find_element(By.CSS_SELECTOR, ".value").text
         price = '€' + ''.join(unformated_price.split())
+        
         category = self.driver.find_elements(By.CSS_SELECTOR, ".breadcrumbs__item__name")[-1].text
         rating = self.get_rating()
         reviews_nr = self.get_reviews_number()
@@ -52,7 +58,9 @@ class WortenScrapper(ProductScraper):
     
     def get_links(self):
         links = []
-        products = self.driver.find_elements(By.CSS_SELECTOR, ".product-card--grid-container a")
+        products = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".product-card--grid-container a"))
+        )
         for product in products:
             links.append(product.get_attribute("href"))
         
@@ -67,7 +75,7 @@ class WortenScrapper(ProductScraper):
         return rating
     
     def get_reviews_number(self):
-        try :
+        try:
             reviews_nr = int(self.driver.find_element(By.CSS_SELECTOR, ".rating__opinions span").text.split(" ")[0])
         except:
             reviews_nr = "N/A"
@@ -77,12 +85,19 @@ class WortenScrapper(ProductScraper):
     def close_cookies(self):
         sleep(1)
         print('Closing cookies')
-        cookies_button = self.driver.find_element(By.XPATH, "/html/body/div[4]/div/div/div/div/section/footer/button[3]")
-        cookies_button.click()
+        try:
+            cookies_button = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, "/html/body/div[4]/div/div/div/div/section/footer/button[3]"))
+            )
+            cookies_button.click()
+        except:
+            print('No cookies button found')
 
     def search_item(self):
         sleep(1)
-        search_bar = self.driver.find_element(By.ID, "search")
+        search_bar = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.ID, "search"))
+        )
         search_bar.click()
         search_bar.send_keys(self.product)
         search_bar.send_keys(Keys.RETURN)
