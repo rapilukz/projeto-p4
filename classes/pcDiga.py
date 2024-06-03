@@ -46,31 +46,47 @@ class pcDigaScraper(ProductScraper):
             price = self.driver.find_element(By.XPATH, priceXpath)
             print(price.text)
             
-            #get rating
-            # ratingsButtonXpath = '//*[@id="tablist-component-tab-tablist-tab-2"]'
-            # scoreXpath = '//*[@id="tp-widget-wrapper"]/div/div[1]/div[1]/div[2]/span[1]'
-
-            # ratingButton = self.driver.find_element(By.XPATH, ratingsButtonXpath)
-            # ratingButton.click()
-
-            # # Wait for the rating element and get the text
-            # try:
-            #     rating = WebDriverWait(self.driver, 3).until(
-            #         EC.presence_of_element_located((By.XPATH, scoreXpath))
-            #     )
-            #     rating_value = rating.text
-            # except TimeoutException:
-            #     rating_value = 'NULL'
-
-
-            # print(f"Rating: {rating_value}/5")
+            iframe = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.TAG_NAME, 'iframe'))
+            )
+            self.driver.switch_to.frame(iframe)
+            
+            #get nr_reviews
+            nrXpath = '//*[@id="numberOfReviews"]/strong'
+            try:
+                nrReviews = self.driver.find_element(By.XPATH, nrXpath)
+                nrReviews = 0
+            except:
+                nrReviews = self.driver.find_element(By.XPATH, '//*[@id="numberOfReviews"]')
+                nrReviews = nrReviews.text.split()[0]
+                
+            print(nrReviews)
             
             
-            #get reviews
-            
-            
-            #get review_nr
-            #
+            if nrReviews != 0:
+
+                self.driver.switch_to.default_content()
+                iframe2Xpath = '//*[@id="tablist-component-tab-tablist-tabpanel-2"]/div/div/div/div/iframe'
+                iframe2 = self.driver.find_element(By.XPATH, iframe2Xpath)
+                
+                self.driver.switch_to.frame(iframe2)
+                
+                #get rating
+                ratingXpath = '//*[@id="tp-widget-wrapper"]/div/div[1]/div[1]/div[2]/span[1]'
+                rating = self.driver.find_element(By.XPATH, ratingXpath)
+                rating = rating.text
+                print(f"Rating: {rating}")
+                
+                #get reviews
+                reviews = WebDriverWait(self.driver, 25).until(
+                    EC.presence_of_all_elements_located((By.CLASS_NAME, "tp-widget-review__text"))
+                )
+                print(f"{len(reviews)} number of reviews on the first page")
+                reviews = [r.find_element(By.TAG_NAME, 'span').text for r in reviews]
+
+                print(reviews)
+
+            self.driver.switch_to.default_content()
 
             print("----------------")
             time.sleep(1)
