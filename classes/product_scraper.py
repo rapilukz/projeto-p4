@@ -13,6 +13,10 @@ class ProductScraper():
         self.df.to_csv(fileName, index = False)
         print(f"Data saved successfully to {fileName}")
 
+    def close_browser(self):
+        self.driver.quit()
+        print("Browser closed successfully")
+
     @staticmethod
     def combine_csvs(outputName, *inputFiles):
         combinedDf = pd.concat((pd.read_csv(f) for f in inputFiles), ignore_index=True)
@@ -35,7 +39,7 @@ class ProductScraper():
         chrome_options.add_experimental_option("detach", True)
         self.driver = webdriver.Chrome(options=chrome_options)
         self.driver.get(self.URL)
-        
+
     #Pseudo abstract method xdd
     def scrape(self):
         pass

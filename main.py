@@ -1,5 +1,9 @@
 from classes.amazon import AmazonScraper
+from classes.worten import WortenScrapper
 
-## Example of how to use the AmazonScraper class
-# amazon = AmazonScraper("ryzen 5 3600x")
-# amazon.scrape()
+worten = WortenScrapper("ryzen 5 3600")
+amazon = AmazonScraper("ryzen 5 3600x")
+
+worten.scrape()
+amazon.scrape()
+
