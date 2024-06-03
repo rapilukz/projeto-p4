@@ -15,5 +15,4 @@ Um Web scrapper a 6 sites que vai pegar 20 produtos em cada site e no fim juntar
 pip install pandas
 pip install selenium
 pip install AmazonCaptcha
-pip install selenium-base
 ```

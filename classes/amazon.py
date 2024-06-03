@@ -9,6 +9,7 @@ class AmazonScraper(ProductScraper):
         super().__init__(product, "Amazon", "https://www.amazon.com")
 
     def scrape(self):
+        print('Scraping Amazon')
         self.open_browser()
         self.search_item()
         self.scrape_items()
