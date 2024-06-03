@@ -7,7 +7,7 @@ Um Web scrapper a 6 sites que vai pegar 20 produtos em cada site e no fim juntar
 - [ ] [Nanochip](https://nanochip.pt/) (Pablo)
 - [ ] [Pc Componentes](https://www.pccomponentes.pt/) (Bryan)
 - [ ] [Chip 7](https://chip7.pt/)
-- [ ] [Worten](https://www.worten.pt/) (Gabriel)
+- [x] [Worten](https://www.worten.pt/) (Gabriel)
 
 ### Package Necessárias
 
