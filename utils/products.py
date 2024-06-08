@@ -1,5 +1,5 @@
 
-links = {
+products = {
     "RAZER Orochi V2 ": {
         "amazon": "https://www.amazon.com/Razer-Orochi-Mobile-Wireless-Gaming/dp/B09G8PSRX6/ref=sr_1_2?crid=2MF62V03VBNHI&dib=eyJ2IjoiMSJ9.IIAAWSuLCoxIfefMmlwZxVQ6HzWxZpPOySWuCs4tWb-XcmCTV_7aQLMjYxOrX8Ho83noRHRzWblAl6qORwCw-JbN5yc4e-EKb9o6qMvo5pzkWIr5NA-knijyybQZZhFHQ_c0zP9jrGxMsv0ptRedsNp6pbFX9qDCeJYe7rG0NNBYsDc15kiVbTe5OwFfjx0s8dbQOBziShmHoipeQ90yxTQfHSm17g_TIbMRHUKK4Kk.woNu8TitExo0ywHCmIRLEpS0HXszQFtm2JTj-VH0sKw&dib_tag=se&keywords=razer+orochi+v2&qid=1717698718&sprefix=razer+orochi%2Caps%2C168&sr=8-2",
         "pcdiga": "https://www.pcdiga.com/rato-optico-razer-orochi-v2-mobile-wireless-bluetooth-gaming-18000dpi-preto-rz01-03730100-r3g1-8886419333241",
