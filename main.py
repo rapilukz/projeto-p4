@@ -15,12 +15,13 @@ amazon = AmazonScraper(driver)
 
 ## Scrape the products
 driver.get("https://www.google.com")
-for product in products:
+for idx, product in enumerate(products):
+    print(f"Scraping {product}... {idx + 1}/{len(products)}")
     amazon.scrape_item(products[product]["amazon"])
     worten.scrape_item(products[product]["worten"])
 
 ## Save the data
-# amazon.to_csv("amazon.csv")
+amazon.to_csv("amazon.csv")
 worten.to_csv("worten.csv")
 
 driver.close()

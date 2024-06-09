@@ -20,7 +20,6 @@ class WortenScrapper(ProductScraper):
         product_name = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, ".title"))
         ).text
-        print('Scraping: ', product_name)
         
         unformated_price = self.driver.find_element(By.CSS_SELECTOR, ".value").text
         price = '€' + ''.join(unformated_price.split())
@@ -61,14 +60,13 @@ class WortenScrapper(ProductScraper):
 
     def close_cookies(self):
         sleep(1)
-        print('Closing cookies')
         try:
-            cookies_button = WebDriverWait(self.driver, 2).until(
+            cookies_button = WebDriverWait(self.driver, 5).until(
                 EC.element_to_be_clickable((By.XPATH, "/html/body/div[4]/div/div/div/div/section/footer/button[3]"))
             )
             cookies_button.click()
         except:
-            print('No cookies button found')
+            pass
 
 # Usage example
 if __name__ == "__main__":
