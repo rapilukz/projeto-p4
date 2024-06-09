@@ -6,34 +6,20 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 class WortenScrapper(ProductScraper):
-    def __init__(self, product):
-        super().__init__(product, "Worten", "https://www.worten.pt/")
+    def __init__(self, driver):
+        super().__init__("Worten", driver)
 
-    def open_browser(self):
-        self.openPage()
+    def scrape_item(self, URL):
+        self.driver.get(URL)
         self.close_cookies()
-
-    def scrape(self):
-        print('Scraping Worten')
-        self.open_browser()
-        self.search_item()
-        self.scrape_items()
-        self.to_csv("worten.csv")
-        
-    def scrape_items(self):
-        sleep(1)
-        links = self.get_links()
-        for link in links:
-            self.driver.get(link)
-            info = self.get_item_info()
-            self.add_item(info["name"], info["category"], info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
+        info = self.get_item_info()
+        self.add_item(info["name"], info["category"], info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
 
     def get_item_info(self):
         sleep(1)
         product_name = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, ".title"))
         ).text
-        print('Scraping: ', product_name)
         
         unformated_price = self.driver.find_element(By.CSS_SELECTOR, ".value").text
         price = '€' + ''.join(unformated_price.split())
@@ -56,16 +42,6 @@ class WortenScrapper(ProductScraper):
 
         return product_info
     
-    def get_links(self):
-        links = []
-        products = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".product-card--grid-container a"))
-        )
-        for product in products:
-            links.append(product.get_attribute("href"))
-        
-        return links[:20]
-    
     def get_rating(self):
         try:
             rating = self.driver.find_element(By.CSS_SELECTOR, ".rating__star-value.semibold span").text
@@ -84,28 +60,17 @@ class WortenScrapper(ProductScraper):
 
     def close_cookies(self):
         sleep(1)
-        print('Closing cookies')
         try:
-            cookies_button = WebDriverWait(self.driver, 10).until(
+            cookies_button = WebDriverWait(self.driver, 5).until(
                 EC.element_to_be_clickable((By.XPATH, "/html/body/div[4]/div/div/div/div/section/footer/button[3]"))
             )
             cookies_button.click()
         except:
-            print('No cookies button found')
-
-    def search_item(self):
-        sleep(1)
-        search_bar = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.ID, "search"))
-        )
-        search_bar.click()
-        search_bar.send_keys(self.product)
-        search_bar.send_keys(Keys.RETURN)
-
+            pass
 
 # Usage example
 if __name__ == "__main__":
-    scraper = WortenScrapper("ryzen 5 3600")
+    scraper = WortenScrapper()
     try:
         scraper.scrape()
     finally:
