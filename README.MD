@@ -4,7 +4,7 @@ Um Web scrapper a 6 sites que vai pegar 20 produtos em cada site e no fim juntar
 ### Sites
 - [x] [Amazon](https://www.amazon.com/) (Gabriel)
 - [ ] [PCDiga](https://www.pcdiga.com/) (Sebastian)
-- [ ] [Nanochip](https://nanochip.pt/) (Pablo)
+- [x] [Nanochip](https://nanochip.pt/) (Pablo)
 - [ ] [Pc Componentes](https://www.pccomponentes.pt/) (Bryan)
 - [ ] [Chip 7](https://chip7.pt/)
 - [x] [Worten](https://www.worten.pt/) (Gabriel)
