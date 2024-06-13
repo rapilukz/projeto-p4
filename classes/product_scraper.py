@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 class ProductScraper():
+
     def __init__(self, storeName, driver):
         self.storeName = storeName
         self.driver = driver
