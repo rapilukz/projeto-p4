@@ -1,6 +1,9 @@
 from classes.amazon import AmazonScraper
 from classes.worten import WortenScrapper
 from classes.nanochip import NanochipScraper
+from classes.chip7 import chip7Scraper
+from classes.pcDiga import pcDigaScrapper
+from classes.pccomponentes import pcComponentesScrapper
 from utils.products import products
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -14,6 +17,9 @@ driver = webdriver.Chrome(options=chrome_options)
 worten = WortenScrapper(driver)
 amazon = AmazonScraper(driver)
 nanochip = NanochipScraper(driver)
+chip7 = chip7Scraper(driver)
+pcDiga = pcDigaScrapper(driver)
+# pcComponentes = pcComponentesScrapper(driver)
 
 ## Scrape the products
 driver.get("https://www.google.com")
@@ -22,10 +28,16 @@ for idx, product in enumerate(products):
     amazon.scrape_item(products[product]["amazon"])
     worten.scrape_item(products[product]["worten"])
     nanochip.scrape_item(products[product]["nanochip"])
+    chip7.scrape_item(products[product]["chip7"])
+    pcDiga.scrape_item(products[product]["pcdiga"])
+    # pcComponentes.scrape_item(products[product]["pcComponentes"])
 
 ## Save the data
 amazon.to_csv("amazon.csv")
 worten.to_csv("worten.csv")
 nanochip.to_csv("nanochip.csv")
+chip7.to_csv("chip7.csv")
+pcDiga.to_csv("pcdiga.csv")
+pcComponentes.to_csv("pcComponentes.csv")
 
 driver.close()
