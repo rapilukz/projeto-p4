@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-class WortenScrapper(ProductScraper):
+class Wortenscraper(ProductScraper):
     def __init__(self, driver):
         super().__init__("Worten", driver)
 
@@ -70,7 +70,7 @@ class WortenScrapper(ProductScraper):
 
 # Usage example
 if __name__ == "__main__":
-    scraper = WortenScrapper()
+    scraper = Wortenscraper()
     try:
         scraper.scrape()
     finally:
