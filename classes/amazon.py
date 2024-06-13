@@ -8,12 +8,12 @@ class AmazonScraper(ProductScraper):
     def __init__(self, driver):
         super().__init__("Amazon", driver)
         
-    def scrape_item(self, URL):
+    def scrape_item(self, URL, shortName):
         self.solve_captcha()
         self.driver.get(URL)
         sleep(2)
         info = self.get_item_info()
-        self.add_item(info["name"], "Computer Parts", info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
+        self.add_item(shortName, info["name"], "Computer Parts", info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
 
     def get_item_info(self):
         product_name = self.driver.find_element(By.ID, "productTitle").text

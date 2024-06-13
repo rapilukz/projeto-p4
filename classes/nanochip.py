@@ -10,11 +10,11 @@ class NanochipScraper(ProductScraper):
     def __init__(self,driver):
         super().__init__("Nanochip",driver)
 
-    def scrape_item(self, URL):
+    def scrape_item(self, URL, shortName):
         self.driver.get(URL)
         sleep(2)
         info = self.get_item_info()
-        self.add_item(info["name"], "Computer Parts", info["price"], info["store"], None, None, None)
+        self.add_item(shortName, info["name"], "Computer Parts", info["price"], info["store"], None, None, None)
 
     def get_item_info(self):
         try:

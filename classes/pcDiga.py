@@ -16,12 +16,12 @@ class pcDigascraper(ProductScraper):
         searchBar = self.driver.find_element(By.XPATH,'//*[@id="searchbar"]')
         searchBar.send_keys(self.product)
 
-    def scrape_item(self, URL):
+    def scrape_item(self, URL, shortName):
         self.driver.get(URL)
         # self.close_cookies()
         info = self.get_item_info()
         # print(info)
-        self.add_item(info["name"], info["category"], info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
+        self.add_item(shortName, info["name"], info["category"], info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
 
     def get_item_info(self):
         time.sleep(1)
