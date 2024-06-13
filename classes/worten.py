@@ -19,10 +19,10 @@ class Wortenscraper(ProductScraper):
         sleep(1)
         product_name = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, ".title"))
-        ).text
+        ).text.replace(",",";")
         
         unformated_price = self.driver.find_element(By.CSS_SELECTOR, ".value").text
-        price = '€' + ''.join(unformated_price.split())
+        price = ''.join(unformated_price.split()).replace(",",".")
         
         category = self.driver.find_elements(By.CSS_SELECTOR, ".breadcrumbs__item__name")[-1].text
         rating = self.get_rating()
@@ -54,7 +54,7 @@ class Wortenscraper(ProductScraper):
         try:
             reviews_nr = int(self.driver.find_element(By.CSS_SELECTOR, ".rating__opinions span").text.split(" ")[0])
         except:
-            reviews_nr = "N/A"
+            reviews_nr = 0
         
         return reviews_nr
 

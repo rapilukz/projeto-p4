@@ -1,21 +1,21 @@
-name,category,price,store,ratings,reviews,reviews_nr
-Rato Gaming RAZER Orochi V2,Ratos para PC,"€161,55",Worten,N/A,[],N/A
-Tapete de Rato Gaming RAZER Goliathus Chroma (Superfície de Pano - Antiderrapante),Tapetes de Rato Gaming,"€39,99",Worten,4.8,[],8
-Disco SSD Interno KINGSTON A400 (480 GB - SATA - 500 MB/s),Discos Internos,"€42,41",Worten,4.6,[],84
-Auscultadores Gaming com Fio RAZER KRAKEN KITTY (Over Ear - Multiplataforma - Rosa),Auscultadores Gaming,"€127,66",Worten,5,[],2
-Rato LOGITECH M330 (Wireless - Regular - 1000 dpi - Preto),Ratos para PC,"€22,77",Worten,4.8,[],5
-Processador INTEL INTEL Core I5-14600Kf,Processadores Intel,"€344,73",Worten,N/A,[],N/A
-"Processador INTEL I7-14700K 20 Núcleos 5,6 Ghz 3,4 Ghz",Processadores Intel,"€519,50",Worten,N/A,[],N/A
-Tapete Rato Gaming RAZER Sphex V3 Large,Tapetes de Rato Gaming,"€26,53",Worten,N/A,[],N/A
-Arctic Freezer I35 A-Rgb Processador Cooler 12 Cm Preto 1 Unidades,Outros Cabos,"€37,83",Worten,N/A,[],N/A
-Rato Gaming STEELSERIES Rival 3 (8500 dpi - Preto),Ratos Gaming,"€24,99",Worten,4.7,[],15
-Auscultadores com Fio STEELSERIES Arctics Nova Pro (Over Ear - Microfone - Noise Canceling - Preto),Auscultadores Gaming,"€275,55",Worten,N/A,[],N/A
-Rato Gaming LOGITECH G903 Lightspeed (16000 dpi - Preto),Ratos Gaming,"€123,99",Worten,5,[],1
-Monitor Gaming LG UltraGear 32GN650-B (31.5'' - 1 ms - 165 Hz - AMD Radeon FreeSync Premium),Monitores Gaming,"€279,99",Worten,3.9,[],12
-Placa Gráfica MSI Geforce Rtx 4060 Ventus 2X Black 8G Oc Placa de Vídeo Nvidia 8 Gb Gddr6,Placas Gráficas NVIDIA,"€340,99",Worten,N/A,[],N/A
-Fonte de Alimentação CORSAIR RM850x (ATX - 850 W - 80 Plus Gold),Ver mais Fontes de Alimentação,"€146,64",Worten,N/A,[],N/A
-Msi Cas Mpg Gungnir 110R White Midi Tower Branco,Computadores Desktop,"€133,66",Worten,N/A,[],N/A
-Placa Gráfica Rtx 4080 Super 16G Ventus 3X Oc Gddr6X Geforce Rtx 4080 Super MSI,Ver Mais Placas Gráficas,"€1251,38",Worten,N/A,[],N/A
-Memória RAM DDR5 CORSAIR Vengeance RGB (2 x 16 GB - 5600 Mhz - Preto),Ver Mais Memórias RAM,"€144,41",Worten,N/A,[],N/A
-Massa Térmica ARCTIC MX-44G,Pastas Térmicas,"€5,37",Worten,4.5,[],2
-ASUS Tuf Gaming Geforce Rtx 4070 Ti Super White Oc Edition 16Gb 16 Gb Gddr6X Dual Hdmi/Tri Displayport Dlss 3 Pci Express N,Ver Mais Placas Gráficas,"€1112,69",Worten,N/A,[],N/A
+shortName,name,category,price,store,ratings,reviews,reviews_nr
+RAZER Orochi V2 ,Rato Gaming RAZER Orochi V2,Ratos para PC,161.55,Worten,N/A,[],0
+Razer Goliathus,Tapete de Rato Gaming RAZER Goliathus Chroma (Superfície de Pano - Antiderrapante),Tapetes de Rato Gaming,39.99,Worten,4.8,[],8
+Kingston 480GB A400,Disco SSD Interno KINGSTON A400 (480 GB - SATA - 500 MB/s),Discos Internos,37.41,Worten,4.6,[],84
+Razer Kraken Kitty,Auscultadores Gaming com Fio RAZER KRAKEN KITTY (Over Ear - Multiplataforma - Rosa),Auscultadores Gaming,127.66,Worten,5,[],2
+Logitech M330 SILENT PLUS Wireless Mouse,Rato LOGITECH M330 (Wireless - Regular - 1000 dpi - Preto),Ratos para PC,27.98,Worten,4.8,[],5
+Intel Core i5-14600KF,Processador INTEL INTEL Core I5-14600Kf,Processadores Intel,334.84,Worten,N/A,[],0
+Intel Core i7-14700K,Processador INTEL I7-14700K 20 Núcleos 5;6 Ghz 3;4 Ghz,Processadores Intel,519.50,Worten,N/A,[],0
+Razer Sphex V3,Tapete Rato Gaming RAZER Sphex V3 Large,Tapetes de Rato Gaming,26.53,Worten,N/A,[],0
+ARCTIC Freezer i35 A-RGB,Arctic Freezer I35 A-Rgb Processador Cooler 12 Cm Preto 1 Unidades,Outros Cabos,34.70,Worten,N/A,[],0
+SteelSeries Rival 3,Rato Gaming STEELSERIES Rival 3 (8500 dpi - Preto),Ratos Gaming,29.99,Worten,4.7,[],15
+SteelSeries Arctis Nova Pro,Auscultadores com Fio STEELSERIES Arctics Nova Pro (Over Ear - Microfone - Noise Canceling - Preto),Auscultadores Gaming,275.55,Worten,N/A,[],0
+Logitech G903,Rato Gaming LOGITECH G903 Lightspeed (16000 dpi - Preto),Ratos Gaming,123.99,Worten,5,[],1
+UltraGear 32GN650-B,Monitor Gaming LG UltraGear 32GN650-B (31.5'' - 1 ms - 165 Hz - AMD Radeon FreeSync Premium),Monitores Gaming,279.99,Worten,3.9,[],12
+MSI Gaming GeForce RTX 4060,Placa Gráfica MSI Geforce Rtx 4060 Ventus 2X Black 8G Oc Placa de Vídeo Nvidia 8 Gb Gddr6,Placas Gráficas NVIDIA,340.56,Worten,N/A,[],0
+Corsair RM850e,Fonte de Alimentação CORSAIR RM850x (ATX - 850 W - 80 Plus Gold),Ver mais Fontes de Alimentação,155.63,Worten,N/A,[],0
+MSI MPG GUNGNIR 110R,Msi Cas Mpg Gungnir 110R White Midi Tower Branco,Computadores Desktop,137.14,Worten,N/A,[],0
+MSI Gaming RTX 4080 Super,Placa Gráfica Rtx 4080 Super 16G Ventus 3X Oc Gddr6X Geforce Rtx 4080 Super MSI,Ver Mais Placas Gráficas,1227.05,Worten,N/A,[],0
+CORSAIR VENGEANCE RGB DDR5 RAM 32GB,Memória RAM DDR5 CORSAIR Vengeance RGB (2 x 16 GB - 5600 Mhz - Preto),Ver Mais Memórias RAM,143.00,Worten,N/A,[],0
+Thermal Paste,Massa Térmica ARCTIC MX-44G,Pastas Térmicas,5.37,Worten,4.5,[],2
+ASUS TUF Gaming NVIDIA GeForce RTX 4070 Ti Super,ASUS Tuf Gaming Geforce Rtx 4070 Ti Super White Oc Edition 16Gb 16 Gb Gddr6X Dual Hdmi/Tri Displayport Dlss 3 Pci Express N,Ver Mais Placas Gráficas,1116.58,Worten,N/A,[],0

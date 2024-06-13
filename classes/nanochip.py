@@ -14,13 +14,13 @@ class NanochipScraper(ProductScraper):
         self.driver.get(URL)
         sleep(2)
         info = self.get_item_info()
-        self.add_item(shortName, info["name"], "Computer Parts", info["price"], info["store"], None, None, None)
+        self.add_item(shortName, info["name"], "Computer Parts", info["price"], info["store"], 'N/A', [], 0)
 
     def get_item_info(self):
         try:
             name = WebDriverWait(self.driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, '/html/body/div[3]/div/div/div[1]/div/div/main/div[2]/div[1]/div/div/div[1]/div/h1'))  
-            ).text
+            ).text.replace(",",";")
 
             price = None
             price_xpaths = [
@@ -36,7 +36,7 @@ class NanochipScraper(ProductScraper):
                     break
                 except:
                     continue
-
+            price = price[:-2].replace(".","").replace(",",".")
             product_details = {
                 "name": name,
                 "price": price,

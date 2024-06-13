@@ -29,12 +29,16 @@ class pcDigascraper(ProductScraper):
         name = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, nameXpath))
         )
-        name = name.text
+        name = name.text.replace(",",";")
         # print(name)
 
         #click on ratings tab
         ratingsButtonXpath = '//*[@id="tablist-component-tab-tablist-tab-2"]'
-        ratingButton = self.driver.find_element(By.XPATH, ratingsButtonXpath)
+        ratingButton = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, ratingsButtonXpath))
+        )
+        # ratingButton = self.driver.find_element(By.XPATH, ratingsButtonXpath)
+        time.sleep(0.5)
         ratingButton.click()
         
         #get category
@@ -44,9 +48,17 @@ class pcDigascraper(ProductScraper):
         # print(category)
         
         #get price
-        priceXpath = '//*[@id="body-overlay"]/div[2]/div[1]/main/div[2]/div[2]/div/div/div[1]/div/div[1]/div'
-        price = self.driver.find_element(By.XPATH, priceXpath)
-        price = price.text
+        priceXpath = '//*[@id="body-overlay"]/div[2]/div[1]/main/div[2]/div[1]/div[1]/div[4]/div/div/div[1]/div'
+        priceXpath2 = '//*[@id="body-overlay"]/div[2]/div[1]/main/div[2]/div[2]/div/div/div[1]/div/div[1]/div[1]'
+
+        try:
+            price = self.driver.find_element(By.XPATH, priceXpath)
+            if price.text == "":
+                price = self.driver.find_element(By.XPATH, priceXpath2)
+        except:
+            price = "ERROR"
+        
+        price = price.text[:-2].replace(",",".")
         # print(price)
 
         iframe = WebDriverWait(self.driver, 10).until(
@@ -84,7 +96,7 @@ class pcDigascraper(ProductScraper):
                 EC.presence_of_all_elements_located((By.CLASS_NAME, "tp-widget-review__text"))
             )
             # print(f"{len(reviews)} number of reviews on the first page")
-            reviews = [r.find_element(By.TAG_NAME, 'span').text for r in reviews]
+            reviews = [r.find_element(By.TAG_NAME, 'span').text.replace(",",";") for r in reviews]
 
         self.driver.switch_to.default_content()
 
