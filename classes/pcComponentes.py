@@ -8,6 +8,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from classes.product_scraper import ProductScraper
 
+from seleniumbase import Driver
+
 class pcComponentesscraper(ProductScraper):
     def __init__(self, driver):
         super().__init__("PC Componentes", driver)
@@ -21,10 +23,16 @@ class pcComponentesscraper(ProductScraper):
         except:
             pass
     
+    def open_sealth_browser(self):
+        self.driver = Driver(uc=True)
+        # self.driver.get(self.URL)
+
     def scrape_item(self, URL, shortName):
+        self.open_sealth_browser()
         self.driver.get(URL)
         self.close_cookies()
         info = self.get_item_info()
+        self.close_browser()
         # print(info)
         self.add_item(shortName, info["name"], info["category"], info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
 
@@ -34,13 +42,13 @@ class pcComponentesscraper(ProductScraper):
         name = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, nameXpath))
         )
-        name = name.text
+        name = name.text.replace(",",";")
         # print(name)
 
         #get category
         categoryXpath = '//*[@id="root"]/main/div[1]/nav/div[1]/div[2]/a'
         category = self.driver.find_element(By.XPATH, categoryXpath)
-        category = category.text
+        category = category.text.replace(",",";")
         # print(category)
         
         #get price

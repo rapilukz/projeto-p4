@@ -19,7 +19,7 @@ amazon = AmazonScraper(driver)
 nanochip = NanochipScraper(driver)
 chip7 = chip7Scraper(driver)
 pcDiga = pcDigascraper(driver)
-# pcComponentes = pcComponentesscraper(driver)
+pcComponentes = pcComponentesscraper(driver)
 
 ## Scrape the products
 driver.get("https://www.google.com")
@@ -30,7 +30,7 @@ for idx, product in enumerate(products):
     nanochip.scrape_item(products[product]["nanochip"], product)
     chip7.scrape_item(products[product]["chip7"], product)
     pcDiga.scrape_item(products[product]["pcdiga"], product)
-    # pcComponentes.scrape_item(products[product]["pcComponentes"], product)
+    pcComponentes.scrape_item(products[product]["pcComponentes"], product)
 
 ## Save the data
 amazon.to_csv("amazon.csv")
@@ -38,6 +38,6 @@ worten.to_csv("worten.csv")
 nanochip.to_csv("nanochip.csv")
 chip7.to_csv("chip7.csv")
 pcDiga.to_csv("pcdiga.csv")
-# pcComponentes.to_csv("pcComponentes.csv")
+pcComponentes.to_csv("pcComponentes.csv")
 
 driver.close()
