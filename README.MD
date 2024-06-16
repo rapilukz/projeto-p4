@@ -15,4 +15,7 @@ Um Web scraper a 6 sites que vai pegar 20 produtos em cada site e no fim juntar 
 pip install pandas
 pip install selenium
 pip install AmazonCaptcha
+pip install numpy
+pip install seaborn
+pip install scikit-learn
 ```
