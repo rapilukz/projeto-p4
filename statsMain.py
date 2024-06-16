@@ -19,6 +19,8 @@ pivot_df.reset_index(inplace=True)
 
 models, metrics = create_models_metrics(pivot_df, stores)
 
+# Prediction usage example -> Product in Chip7 store that costs 1800
+# 3 prediction models in total to try
 prices = predict_prices("Chip7", 1800, models,"Linear Regression", stores)
 
 classified_table = create_classified_table(pivot_df, stores, 0.15)
