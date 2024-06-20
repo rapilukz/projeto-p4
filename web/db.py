@@ -62,3 +62,7 @@ conn.commit()
 
 # Close the connection
 conn.close()
+
+# So it doesn't run when imported
+if __name__ == '__main__':
+    pass
