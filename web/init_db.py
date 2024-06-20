@@ -6,6 +6,7 @@ from utils.functions import convert_to_float, convert_to_int
 
 # Connect to SQLite database
 conn = sqlite3.connect('products.db')
+data_folder = "../data"
 
 # Create a cursor object
 cursor = conn.cursor()
@@ -24,7 +25,6 @@ CREATE TABLE IF NOT EXISTS products (
     reviews_nr INTEGER
 );
 """
-data_folder = "../data"
 
 def insert_data_from_csv(file_path):
     with open(file_path, 'r', encoding='utf-8') as csvfile:
