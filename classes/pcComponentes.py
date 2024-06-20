@@ -11,7 +11,6 @@ from classes.product_scraper import ProductScraper
 from seleniumbase import Driver
 
 class pcComponentesscraper(ProductScraper):
-
     def __init__(self, driver):
         super().__init__("PC Componentes", driver)
 
@@ -37,7 +36,6 @@ class pcComponentesscraper(ProductScraper):
         # print(info)
         self.add_item(shortName, info["name"], info["category"], info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
 
-
     def get_item_info(self):
         time.sleep(1)
         nameXpath = '//*[@id="pdp-title"]'
@@ -45,14 +43,12 @@ class pcComponentesscraper(ProductScraper):
             EC.presence_of_element_located((By.XPATH, nameXpath))
         )
         name = name.text.replace(",",";")
-
         # print(name)
 
         #get category
         categoryXpath = '//*[@id="root"]/main/div[1]/nav/div[1]/div[2]/a'
         category = self.driver.find_element(By.XPATH, categoryXpath)
         category = category.text.replace(",",";")
-
         # print(category)
         
         #get price
