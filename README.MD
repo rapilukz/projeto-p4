@@ -13,6 +13,13 @@ Um Web scrapper a 6 sites que vai pegar 20 produtos em cada site e no fim juntar
 
 ### Parte 3 - Web Application
 
+Para correr a app em dev:
+```
+cd web
+py -3 -m venv .venv
+python -m flask --app .\main.py run
+``` 
+
 ### Package Necessárias
 
 ```python
@@ -20,4 +27,6 @@ pip install pandas
 pip install selenium
 pip install AmazonCaptcha
 pip install Flask
+pip install seaborn
+pip install matplotlib
 ```
