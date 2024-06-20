@@ -1,9 +1,9 @@
 from classes.amazon import AmazonScraper
 from classes.worten import Wortenscraper
 from classes.nanochip import NanochipScraper
-from classes.chip7 import chip7Scraper
-from classes.pcDiga import pcDigascraper
-from classes.pccomponentes import pcComponentesscraper
+from classes.chip7 import Chip7Scraper
+from classes.pcDiga import PcDigaScraper
+from classes.pcComponentes import pcComponentesScraper
 from utils.products import products
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -17,9 +17,9 @@ driver = webdriver.Chrome(options=chrome_options)
 worten = Wortenscraper(driver)
 amazon = AmazonScraper(driver)
 nanochip = NanochipScraper(driver)
-chip7 = chip7Scraper(driver)
-pcDiga = pcDigascraper(driver)
-pcComponentes = pcComponentesscraper(driver)
+chip7 = Chip7Scraper(driver)
+pcDiga = PcDigaScraper(driver)
+pcComponentes = pcComponentesScraper(driver)
 
 ## Scrape the products
 driver.get("https://www.google.com")

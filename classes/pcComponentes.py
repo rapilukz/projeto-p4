@@ -10,7 +10,7 @@ from classes.product_scraper import ProductScraper
 
 from seleniumbase import Driver
 
-class pcComponentesscraper(ProductScraper):
+class pcComponentesScraper(ProductScraper):
     def __init__(self, driver):
         super().__init__("PC Componentes", driver)
 

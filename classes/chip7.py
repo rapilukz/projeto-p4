@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from classes.product_scraper import ProductScraper
 
-class chip7Scraper(ProductScraper):
+class Chip7Scraper(ProductScraper):
     def __init__(self, driver):
         super().__init__("Chip7", driver)
 
