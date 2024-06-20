@@ -17,7 +17,7 @@ Para correr a app em dev:
 ```
 cd web
 py -3 -m venv .venv
-python -m flask --app .\main.py run
+python -m flask --app .\main.py --debug run
 ``` 
 
 ### Package Necessárias
@@ -27,6 +27,7 @@ pip install pandas
 pip install selenium
 pip install AmazonCaptcha
 pip install Flask
+pip install flask_sqlalchemy
 pip install seaborn
 pip install matplotlib
 ```
