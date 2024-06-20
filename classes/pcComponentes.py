@@ -1,4 +1,4 @@
-from time import sleep
+import time
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -9,86 +9,79 @@ from selenium.common.exceptions import TimeoutException
 from product_scraper import ProductScraper
 
 class pcComponentesScrapper(ProductScraper):
-    def __init__(self, product):
-      super().__init__(product, "PC Componentes", "https://www.pccomponentes.pt/")
-      
-    def open_browser(self):
-      self.openPage()
-      self.close_cookies()
-      
-      
-    def scrape(self):
-      print("Scrapping PC Componentes")
-      self.open_browser()
-      print("Browser opened")
-      self.search_item()
-      self.scrape_items()
-      self.to_csv("pcComponentes.csv")
-      
-    def scrape_items(self):
-      sleep(1)
-      links = self.get_links()  
-      for link in links:
-        self.driver.get(link)
-        info = self.get_item_info()
-        self.add_item(info["name"], info["price"])
-    
-    def get_item_info(self):
-      sleep(1)
-      product_name = WebDriverWait(self.driver, 10).until(
-        EC.presence_of_element_located((By.ID, "pdp-title"))
-      ).text
-      print('Scraping: ', product_name)
-      
-      unformated_price = self.driver.find_element(By.ID, "pdp-price-current-integer").text
-      price = '€' + ''.join(unformated_price.split())
-      
-      product_info = {
-        "name": product_name,
-        "price": price
-      }
-      
-      return product_info
-    
-    def get_links(self):
-      links = []
-      products = WebDriverWait(self.driver, 10).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".sc-dhKdcB cxbDvY sc-fvwjDU bpDGAZ sc-hXCwRK ctOovi algolia-tracked"))
-      )
-      for product in products:
-        links.append(product.get_attribute("href"))
-        
-      return links[:20]
-      
+    def __init__(self, driver):
+        super().__init__("PC Componentes", driver)
+
     def close_cookies(self):
-      sleep(1)
-      print('Closing cookies')
-      try:
-        sleep(1)
-        cookies_button = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located((By.ID, "cookiesAcceptAll"))
+        try:
+            cookies_button = WebDriverWait(self.driver, 5).until(
+                EC.element_to_be_clickable((By.XPATH, '//*[@id="cookiesrejectAll"]'))
+            )
+            cookies_button.click()
+        except:
+            pass
+    
+    def scrape_item(self, URL):
+        self.driver.get(URL)
+        self.close_cookies()
+        info = self.get_item_info()
+        # print(info)
+        self.add_item(info["name"], info["category"], info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
+
+    def get_item_info(self):
+        time.sleep(1)
+        nameXpath = '//*[@id="pdp-title"]'
+        name = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, nameXpath))
         )
-        cookies_button.click()
-      except:
-        print('No cookies button found')
-      
-    def search_item(self):
-      sleep(1)
-      # search_bar = WebDriverWait(self.driver, 10).until(
-      #   EC.presence_of_element_located((By.ID, "search"))
-      # )
-      search_bar = self.driver.find_element(By.ID,"search")
-      print("Estou aqui")
-      search_bar.click()
-      print("Agora aqui")      
-      search_bar.send_keys(self.product)
-      print("Item found")
-          
-# Usage example
-if __name__ == "__main__":
-    scraper = pcComponentesScrapper("Ryzen 5 3600")
-    try:
-      scraper.scrape()
-    finally:
-      # scraper.close_browser()
-      print("Pode fechar")
+        name = name.text
+        # print(name)
+
+        #get category
+        categoryXpath = '//*[@id="root"]/main/div[1]/nav/div[1]/div[2]/a'
+        category = self.driver.find_element(By.XPATH, categoryXpath)
+        category = category.text
+        # print(category)
+        
+        #get price
+        priceXpath = '//*[@id="pdp-price-current-integer"]'
+        test = '//*[@id="up-pdp-section-buybox"]/div[1]/div'
+        price = self.driver.find_element(By.XPATH, priceXpath)
+        price = price.get_attribute("innerText").replace(",", ".")[:-1]
+        # print(f"The price is {price}")
+        
+        #get nr_reviews
+        nrXpath = '//*[@id="pdp-section-opinion-info"]/span'
+        try:
+            nrReviews = self.driver.find_element(By.XPATH, nrXpath)
+            nrReviews = nrReviews.text.split()[0][1:]
+        except:
+            nrReviews = 0
+        # print(nrReviews)
+        
+        rating = "N/A"
+        reviews = []
+        if nrReviews != 0:
+            #get rating
+            ratingXpath = '//*[@id="product-summary"]/div[1]/div[1]/div/div[1]'
+            rating = self.driver.find_element(By.XPATH, ratingXpath)
+            rating = rating.text
+
+            #get reviews
+            reviewsCSSselector = ".sc-camqpD.jzxKEN.sc-klSPgc.fihMce"
+            reviews = self.driver.find_elements(By.CSS_SELECTOR, reviewsCSSselector)
+            reviews = [x.text for x in reviews]
+            
+
+        # print(rating)
+        # print(reviews)
+        product_info = {
+            "name": name,
+            "price": price,
+            "category": category,
+            "store": self.storeName,
+            "ratings": rating,
+            "reviews_nr": nrReviews,
+            "reviews": reviews
+        }
+        return product_info
