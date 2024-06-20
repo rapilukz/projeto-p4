@@ -6,9 +6,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-from product_scraper import ProductScraper
+from classes.product_scraper import ProductScraper
 
-class pcDigaScrapper(ProductScraper):
+class pcDigascraper(ProductScraper):
     def __init__(self, driver):
         super().__init__("PC Diga", driver)
         
@@ -16,12 +16,12 @@ class pcDigaScrapper(ProductScraper):
         searchBar = self.driver.find_element(By.XPATH,'//*[@id="searchbar"]')
         searchBar.send_keys(self.product)
 
-    def scrape_item(self, URL):
+    def scrape_item(self, URL, shortName):
         self.driver.get(URL)
         # self.close_cookies()
         info = self.get_item_info()
         # print(info)
-        self.add_item(info["name"], info["category"], info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
+        self.add_item(shortName, info["name"], info["category"], info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
 
     def get_item_info(self):
         time.sleep(1)
@@ -29,12 +29,16 @@ class pcDigaScrapper(ProductScraper):
         name = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, nameXpath))
         )
-        name = name.text
+        name = name.text.replace(",",";")
         # print(name)
 
         #click on ratings tab
         ratingsButtonXpath = '//*[@id="tablist-component-tab-tablist-tab-2"]'
-        ratingButton = self.driver.find_element(By.XPATH, ratingsButtonXpath)
+        ratingButton = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, ratingsButtonXpath))
+        )
+        # ratingButton = self.driver.find_element(By.XPATH, ratingsButtonXpath)
+        time.sleep(0.5)
         ratingButton.click()
         
         #get category
@@ -44,9 +48,17 @@ class pcDigaScrapper(ProductScraper):
         # print(category)
         
         #get price
-        priceXpath = '//*[@id="body-overlay"]/div[2]/div[1]/main/div[2]/div[2]/div/div/div[1]/div/div[1]/div'
-        price = self.driver.find_element(By.XPATH, priceXpath)
-        price = price.text
+        priceXpath = '//*[@id="body-overlay"]/div[2]/div[1]/main/div[2]/div[1]/div[1]/div[4]/div/div/div[1]/div'
+        priceXpath2 = '//*[@id="body-overlay"]/div[2]/div[1]/main/div[2]/div[2]/div/div/div[1]/div/div[1]/div[1]'
+
+        try:
+            price = self.driver.find_element(By.XPATH, priceXpath)
+            if price.text == "":
+                price = self.driver.find_element(By.XPATH, priceXpath2)
+        except:
+            price = "ERROR"
+        
+        price = price.text[:-2].replace(",",".")
         # print(price)
 
         iframe = WebDriverWait(self.driver, 10).until(
@@ -84,7 +96,7 @@ class pcDigaScrapper(ProductScraper):
                 EC.presence_of_all_elements_located((By.CLASS_NAME, "tp-widget-review__text"))
             )
             # print(f"{len(reviews)} number of reviews on the first page")
-            reviews = [r.find_element(By.TAG_NAME, 'span').text for r in reviews]
+            reviews = [r.find_element(By.TAG_NAME, 'span').text.replace(",",";") for r in reviews]
 
         self.driver.switch_to.default_content()
 

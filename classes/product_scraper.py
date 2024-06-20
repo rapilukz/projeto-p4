@@ -7,7 +7,7 @@ class ProductScraper():
     def __init__(self, storeName, driver):
         self.storeName = storeName
         self.driver = driver
-        self.df = pd.DataFrame(columns=["name", "category", "price", "store", "ratings", "reviews", "reviews_nr"])
+        self.df = pd.DataFrame(columns=["shortName","name", "category", "price", "store", "ratings", "reviews", "reviews_nr"])
 
     def to_csv(self, fileName):
         self.df.to_csv(f"./data/{fileName}", index = False)
@@ -29,6 +29,6 @@ class ProductScraper():
     def got_back(self):
         self.driver.back()
 
-    def add_item(self, name, category, price, store, ratings, reviews, reviews_nr):
-        new_row = { "name": name, "category": category, "price": price, "store": store, "ratings": ratings, "reviews": reviews, "reviews_nr": reviews_nr }
+    def add_item(self, shortName, name, category, price, store, ratings, reviews, reviews_nr):
+        new_row = {"shortName": shortName, "name": name, "category": category, "price": price, "store": store, "ratings": ratings, "reviews": reviews, "reviews_nr": reviews_nr }
         self.df = pd.concat([self.df, pd.DataFrame([new_row])], ignore_index=True)

@@ -8,18 +8,18 @@ class AmazonScraper(ProductScraper):
     def __init__(self, driver):
         super().__init__("Amazon", driver)
         
-    def scrape_item(self, URL):
+    def scrape_item(self, URL, shortName):
         self.solve_captcha()
         self.driver.get(URL)
         sleep(2)
         info = self.get_item_info()
-        self.add_item(info["name"], "Computer Parts", info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
+        self.add_item(shortName, info["name"], "Computer Parts", info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
 
     def get_item_info(self):
         product_name = self.driver.find_element(By.ID, "productTitle").text
-        print('Scraping: ', product_name)
+        # print('Scraping: ', product_name)
         price = self.get_price()
-        rating = self.driver.find_element(By.ID, "acrPopover").get_attribute("title")
+        rating = self.driver.find_element(By.ID, "acrPopover").get_attribute("title").split()[0]
         store = self.storeName 
         try:
             reviews_number = self.driver.find_element(By.ID, "acrCustomerReviewText").text.split(" ")[0]
@@ -52,10 +52,11 @@ class AmazonScraper(ProductScraper):
             whole_price = self.driver.find_elements(By.XPATH, './/span[@class="a-price-whole"]')
             fraction_price = self.driver.find_elements(By.XPATH, './/span[@class="a-price-fraction"]')
             price = '.'.join([whole_price[0].text, fraction_price[0].text])
+            if price == ".":
+                price = self.driver.find_element(By.XPATH, '//*[@id="corePrice_desktop"]/div/table/tbody/tr[2]/td[2]/span[1]/span[2]').text[1:].replace(",","")
         except:
             price = "N/A"
-
-        return price
+        return price.replace(",","")
         
     def solve_captcha(self):
         try:

@@ -5,24 +5,24 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-class WortenScrapper(ProductScraper):
+class Wortenscraper(ProductScraper):
     def __init__(self, driver):
         super().__init__("Worten", driver)
 
-    def scrape_item(self, URL):
+    def scrape_item(self, URL, shortName):
         self.driver.get(URL)
         self.close_cookies()
         info = self.get_item_info()
-        self.add_item(info["name"], info["category"], info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
+        self.add_item(shortName, info["name"], info["category"], info["price"], info["store"], info["ratings"], info["reviews"], info["reviews_nr"])
 
     def get_item_info(self):
         sleep(1)
         product_name = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, ".title"))
-        ).text
+        ).text.replace(",",";")
         
         unformated_price = self.driver.find_element(By.CSS_SELECTOR, ".value").text
-        price = '€' + ''.join(unformated_price.split())
+        price = ''.join(unformated_price.split()).replace(",",".")
         
         category = self.driver.find_elements(By.CSS_SELECTOR, ".breadcrumbs__item__name")[-1].text
         rating = self.get_rating()
@@ -54,7 +54,7 @@ class WortenScrapper(ProductScraper):
         try:
             reviews_nr = int(self.driver.find_element(By.CSS_SELECTOR, ".rating__opinions span").text.split(" ")[0])
         except:
-            reviews_nr = "N/A"
+            reviews_nr = 0
         
         return reviews_nr
 
@@ -70,7 +70,7 @@ class WortenScrapper(ProductScraper):
 
 # Usage example
 if __name__ == "__main__":
-    scraper = WortenScrapper()
+    scraper = Wortenscraper()
     try:
         scraper.scrape()
     finally:
