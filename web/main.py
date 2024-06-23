@@ -85,7 +85,7 @@ def index():
 @app.route('/product/<int:product_id>')
 def product_details(product_id):
     product = Product.query.get_or_404(product_id)
-    reviews_list = product.get_reviews_list()
+    reviews_list = Product.get_reviews_list(product)
     return render_template('product_details.html', product=product, reviews=reviews_list)
 
 if __name__ == '__main__':
