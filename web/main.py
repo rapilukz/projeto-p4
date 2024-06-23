@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import csv
 import json
 import os
+import ast
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db'
@@ -23,6 +24,12 @@ class Product(db.Model):
 
     def __repr__(self):
         return f'<Product {self.id}>'
+    
+    def get_reviews_list(self):
+        try:
+            return ast.literal_eval(self.reviews)
+        except ValueError:
+            return []
 
 def convert_to_int(value):
     try:
@@ -40,7 +47,7 @@ def insert_data_from_csv(file_path):
     with open(file_path, 'r', encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            reviews = json.dumps(row['reviews'].split('|')) #  Convert reviews to JSON string
+            reviews = row['reviews']
             product = Product(
                 shortName=row['shortName'],
                 name=row['name'],
@@ -63,19 +70,23 @@ def insert_data():
 
     print("Data insertion complete.")
 
-
 if not os.path.exists('./instance/products.db'):
     with app.app_context():
-        db.create_all()
         insert_data()
+        db.create_all()
         print("Database created")
-
 
 ## Start of the web application
 @app.route('/')
 def index():
     products = Product.query.all()
     return render_template('index.html', products=products)
+
+@app.route('/product/<int:product_id>')
+def product_details(product_id):
+    product = Product.query.get_or_404(product_id)
+    reviews_list = product.get_reviews_list()
+    return render_template('product_details.html', product=product, reviews=reviews_list)
 
 if __name__ == '__main__':
     app.run(debug=True)

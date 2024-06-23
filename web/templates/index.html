@@ -32,7 +32,7 @@
               <td>{{ product.ratings }}</td>
               <td>{{ product.reviews_nr }}</td>
               <td>
-                <a href="#" class="btn btn-primary">Show</a>
+                <a href="{{ url_for('product_details', product_id=product.id) }}" class="btn btn-primary">Details</a>
               </td>
             </tr>
           {% endfor %}
