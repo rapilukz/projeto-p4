@@ -1,9 +1,50 @@
 {% extends 'base.html' %} 
 
 {% block head %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+
 <title>Home</title>
 {% endblock %} 
 
 {% block body %}
-<h1>Home</h1>
+<div class="container d-flex flex-column">
+    <h1 class="mt-5">Products</h1>
+
+    <table id="table" class="table table-striped">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Store</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Ratings</th>
+                <th>Reviews Nr</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+              <td>{{ product.shortName }}</td>
+              <td>{{ product.store }}</td>
+              <td>{{ product.price }}€</td>
+              <td>{{ product.category }}</td>
+              <td>{{ product.ratings }}</td>
+              <td>{{ product.reviews_nr }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+
+    {% block scripts %}
+        <script>
+            $(document).ready(function () {
+                $('#table').DataTable();
+            });
+        </script>
+    {% endblock %}
+</div>
 {% endblock %}

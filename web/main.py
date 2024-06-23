@@ -70,9 +70,12 @@ if not os.path.exists('./instance/products.db'):
         insert_data()
         print("Database created")
 
+
+## Start of the web application
 @app.route('/')
 def index():
-    return render_template('index.html')
+    products = Product.query.all()
+    return render_template('index.html', products=products)
 
 if __name__ == '__main__':
     app.run(debug=True)
