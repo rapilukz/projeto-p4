@@ -10,7 +10,7 @@
 <div class="container d-flex flex-column">
     <h1 class="mt-5">Products</h1>
 
-    <table id="table" class="table table-striped">
+    <table id="data" class="table table-striped">
         <thead>
             <tr>
                 <th>Product</th>
@@ -19,6 +19,7 @@
                 <th>Category</th>
                 <th>Ratings</th>
                 <th>Reviews Nr</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +31,9 @@
               <td>{{ product.category }}</td>
               <td>{{ product.ratings }}</td>
               <td>{{ product.reviews_nr }}</td>
+              <td>
+                <a href="#" class="btn btn-primary">Show</a>
+              </td>
             </tr>
           {% endfor %}
         </tbody>
@@ -40,11 +44,26 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
 
     {% block scripts %}
-        <script>
-            $(document).ready(function () {
-                $('#table').DataTable();
+    <script>
+        $(document).ready(function() {
+            const table = $('#data').DataTable();
+            if (table) {
+                table.destroy();
+            }
+            
+            $('#data').DataTable({
+                columns: [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    { orderable: false, searchable: false }
+                ]
             });
-        </script>
+        });
+    </script>
     {% endblock %}
 </div>
 {% endblock %}
