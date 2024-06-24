@@ -1,5 +1,205 @@
 {% extends 'base.html' %} 
 
 {% block head %}
-<title>Graphs</title>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<title>Statistics</title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <form class="mt-3" id="prediction-form">
+        <h1 class="mt-3">Calcular Preços</h1>
+        <div class="d-flex">
+            <div style="width: 50%;">
+                <label for="store">Choose a store:</label>
+                <select class="form-select form-control" id="store" name="store">
+                    {% for store in storeSummary_df['store'].unique() %}
+                    <option value="{{ store }}">{{ store }}</option>
+                    {% endfor %}
+                </select>
+            
+                <label for="price">Enter price:</label>
+                <input type="number" class="form-control" min="0" id="price" name="price" value="1800">
+            
+                <label for="model">Choose a model:</label>
+                <select id="model" class="form-select form-control" name="model">
+                    <option value="Linear Regression">Linear Regression</option>
+                    <option value="Decision Trees">Decision Trees</option>
+                    <option value="Neural Network">Neural Network</option>
+                </select>
+            
+                <button type="submit" class="btn btn-primary mt-3">Predict</button>
+            </div>
+            <div>
+                <h3>Result:</h3>
+                <div id="prediction-result" class="mt-2">
+                    <div class="prediction-text">Amazon: <span class="prediction-price">0.00 </span></div>
+                    <div class="prediction-text">Chip7: <span class="prediction-price">0.00 </span></div>
+                    <div class="prediction-text">Nanochip: <span class="prediction-price">0.00 </span></div>
+                    <div class="prediction-text">PC Componentes: <span class="prediction-price">0.00 </span></div>
+                    <div class="prediction-text">PC Diga: <span class="prediction-price">0.00 </span></div>
+                    <div class="prediction-text">Worten: <span class="prediction-price">0.00 </span></div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <h1 class="mt-4">Classificar Preços</h1>
+    <div class="mt2-">
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Classification Heatmap
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body d-flex justify-content-center">
+                    <img class="image-graph" src="../static/graphs/classificationHeatmap.png"/>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Product Classification
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body d-flex justify-content-center">
+                    <img class="image-graph" src="../static/graphs/productClassification.png"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1 class="mt-4">Métricas</h1>
+    <div class="mt-5">
+        <table id="metrics" class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Tipo de Métrica</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.js"></script>
+
+<script>
+document.getElementById('prediction-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const store = document.getElementById('store').value;
+    const price = document.getElementById('price').value;
+    const model = document.getElementById('model').value;
+
+    fetch('/api/predict', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            store: store,
+            price: price,
+            model: model
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const prediction = data.prediction;
+        document.getElementById('prediction-result').innerHTML = `
+            <div class="prediction-text">Amazon: <span class="prediction-price">${prediction.Amazon.toFixed(2)} <span/></div>
+            <div class="prediction-text">Chip7: <span class="prediction-price">${prediction.Chip7.toFixed(2)} <span/></div>
+            <div class="prediction-text">Nanochip: <span class="prediction-price">${prediction.Nanochip.toFixed(2)} <span/></div>
+            <div class="prediction-text">PC Componentes: <span class="prediction-price">${prediction["PC Componentes"].toFixed(2)} <span/></div>
+            <div class="prediction-text">PC Diga: <span class="prediction-price">${prediction["PC Diga"].toFixed(2)} <span/></div>
+            <div class="prediction-text">Worten: <span class="prediction-price">${prediction.Worten.toFixed(2)} <span/></div>
+        `;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+
+});
+
+$(document).ready(function() {
+    const metrics = JSON.parse('{{ metrics | tojson | safe }}');
+
+    const table = $('#metrics').DataTable({
+        data: Object.keys(metrics).map(modelType => [modelType]),
+        columns: [
+        {
+            "className": 'details-control',
+            "orderable": false,
+            "data": null,
+            "defaultContent": '<i class="fas fa-plus toggle-icon"></i>'
+        },
+        { title: "Model Type", data: 0 }
+        ],
+        order: [[1, 'asc']]
+    });
+
+    function format(storeMetrics) {
+        let html = '<table class="table table-striped">';
+        html += `
+            <tr>
+                <th>Store</th>
+                <th>MAE</th>
+                <th>MSE</th>
+                <th>R²</th>
+            </tr>
+        `;
+        for (const store in storeMetrics) {
+            html += `
+                <tr>
+                    <td>${store}</td>
+                    <td>${storeMetrics[store].mae.toFixed(3)}</td>
+                    <td>${storeMetrics[store].mse.toFixed(3)}</td>
+                    <td>${storeMetrics[store].r_2.toFixed(3)}</td>
+                </tr>
+            `;
+        }
+        html += '</table>';
+        return html;
+    }
+    
+    $('#metrics tbody').on('click', 'td', function() {
+        const tr = $(this).closest('tr');
+        const row = table.row(tr);
+        const modelType = row.data()[0];
+        
+        if (row.child.isShown()) {
+            row.child.hide();
+            tr.removeClass('shown');
+            tr.find('.toggle-icon').removeClass('fa-minus').addClass('fa-plus');
+        } else {
+            // Close all other rows and open this row
+            table.rows().every(function() {
+                if (this.child.isShown()) {
+                    this.child.hide();
+                    $(this.node()).removeClass('shown').find('.toggle-icon').removeClass('fa-minus').addClass('fa-plus');
+                }
+            });
+
+            // Open this row
+            row.child(format(metrics[modelType])).show();
+            tr.addClass('shown');
+            tr.find('.toggle-icon').removeClass('fa-plus').addClass('fa-minus');
+        }
+    });
+});
+
+
+</script>
 {% endblock %}

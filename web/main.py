@@ -1,8 +1,12 @@
-from flask import Flask, g, render_template
+from flask import Flask, g, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import csv
 import os
 import ast
+import sys
+import pickle
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from stats.train import predict_prices
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db'
@@ -93,7 +97,42 @@ def graph():
 
 @app.route('/statistics')
 def statistics():
-    return render_template('statistics.html')
+    # Open the pickle containing the summaries
+    with open('../pickles/productSummary.pkl', 'rb') as f:
+        productSummary_df = pickle.load(f)
+
+    with open('../pickles/storeSummary.pkl', 'rb') as f:
+        storeSummary_df = pickle.load(f)
+
+    with open('../pickles/models.pkl', 'rb') as f:
+        models = pickle.load(f)
+
+    # Load metrics
+    with open('../pickles/metrics.pkl', 'rb') as f:
+        metrics = pickle.load(f)
+
+    return render_template('statistics.html', productSummary_df=productSummary_df, storeSummary_df=storeSummary_df, models=models, metrics=metrics)
+
+
+@app.route('/api/predict', methods=['POST'])
+def api_predict():
+    data = request.get_json()
+    store = data.get('store')
+    price = float(data.get('price'))
+    model_name = data.get('model')
+
+    # Load the models from the pickle file
+    with open('../pickles/models.pkl', 'rb') as f:
+        models = pickle.load(f)
+
+    # Get the unique stores from the store summary
+    with open('../pickles/storeSummary.pkl', 'rb') as f:
+        storeSummary_df = pickle.load(f)
+    stores = storeSummary_df['store'].unique()
+
+    # Perform the prediction
+    prediction = predict_prices(store, price, models, model_name, stores)
+    return jsonify({'prediction': prediction})
 
 if __name__ == '__main__':
     app.run(debug=True)
