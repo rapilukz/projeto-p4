@@ -4,6 +4,7 @@ from stats.createSummaryDfs import productSummary, storeSummary
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+import pickle
 
 def round_to_nearest_tens(value):
     return int(np.floor(value / 10.0) * 10)
@@ -19,8 +20,16 @@ stores = df['store'].unique()
 colors = plt.cm.tab10(range(len(stores)))
 
 # Create summary dfs (contains descriptive statistics)
-productSummary_df = productSummary(df)
-storeSummary_df = storeSummary(df)
+productSummary(df)
+storeSummary(df)
+
+
+# Open the pickle containing the summaries
+with open('./pickles/productSummary.pkl', 'rb') as f:
+    productSummary_df = pickle.load(f)
+
+with open('./pickles/storeSummary.pkl', 'rb') as f:
+    storeSummary_df = pickle.load(f)
 
 for s in stats:
     for group, group_name, summary_df in zip(['store', 'shortName'], ['Store', 'Product'], [storeSummary_df, productSummary_df]):
@@ -111,12 +120,26 @@ plt.savefig('./web/static/graphs/histogram_store.png')
 pivot_df = df.pivot(index='shortName', columns='store', values='price')
 pivot_df.reset_index(inplace=True)
 
-models, metrics = create_models_metrics(pivot_df, stores)
+create_models_metrics(pivot_df, stores)
+
+
 
 # Prediction usage example -> Product in Chip7 store that costs 1800
 # 3 prediction models in total to try
+# read models and metrics from disk
+
+with open('./pickles/models.pkl', 'rb') as f:
+    models = pickle.load(f)
+
+# Load metrics
+with open('./pickles/metrics.pkl', 'rb') as f:
+    metrics = pickle.load(f)
+
 prices = predict_prices("Chip7", 1800, models,"Linear Regression", stores)
 
+
+
+###
 classified_table = create_classified_table(pivot_df, stores, 0.15)
 
 # print(classified_table)
