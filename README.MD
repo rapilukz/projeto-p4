@@ -10,8 +10,11 @@ Um Web scrapper a 6 sites que vai pegar 20 produtos em cada site e no fim juntar
 - [x] [Worten](https://www.worten.pt/) (Gabriel)
 
 ### Parte 2 - Machine Learning/Graphs
+Implementação de Gráficos com base dos dados recolhidos dos csvs.
+
 
 ### Parte 3 - Web Application
+Criação de uma web app para mostrar todos os dados recolhidos anteriormento usando flask
 
 Para correr a app em dev:
 ```
@@ -30,4 +33,5 @@ pip install Flask
 pip install flask_sqlalchemy
 pip install seaborn
 pip install matplotlib
+pip install scikit-learn
 ```
