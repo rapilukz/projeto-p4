@@ -4,6 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import glob
 import os
+import pickle
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -14,6 +15,9 @@ from sklearn.metrics import mean_absolute_error, root_mean_squared_error, r2_sco
 
 
 def create_models_metrics(df, stores):
+    models_path = './pickles/models.pkl'
+    metrics_path = './pickles/metrics.pkl'
+
     # Train a model for each store using the other stores' prices as features
     models = {"Linear Regression":{}, "Decision Trees":{}, "Neural Network":{}}
     metrics = {"Linear Regression":{}, "Decision Trees":{}, "Neural Network":{}}
@@ -51,7 +55,14 @@ def create_models_metrics(df, stores):
             metrics[r][store]["mse"] = root_mean_squared_error(y_test, y_pred)
             metrics[r][store]["r_2"] = r2_score(y_test, y_pred)
     
-    return models, metrics
+    with open(models_path, 'wb') as f:
+        pickle.dump(models, f)
+    
+    with open(metrics_path, 'wb') as f:
+        pickle.dump(metrics, f)
+    
+    print(f"Models saved to {models_path}")
+    print(f"Metrics saved to {metrics_path}")
 
 def predict_prices(store, price, models, modelType, stores):
 
