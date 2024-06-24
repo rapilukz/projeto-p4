@@ -75,7 +75,7 @@ for s in stats:
                 xytext=(0, 5),
                 textcoords="offset points",
                 ha='center', va='bottom', fontsize=7)
-        plt.savefig(f'./stats/graphs/{group_name}/{group_name}_{s}.png', bbox_inches='tight')
+        plt.savefig(f'./web/static/graphs/{group_name}/{group_name}_{s}.png', bbox_inches='tight')
         # plt.show()
 
 ####
@@ -100,7 +100,7 @@ plt.title('Histogram of Prices by Store')
 # Add legend
 plt.legend(title='Store', prop={'size': 10})
 
-plt.savefig('./stats/graphs/histogram_store.png')
+plt.savefig('./web/static/graphs/histogram_store.png')
 
 
 
@@ -128,7 +128,7 @@ plt.title('Product Classification in Different Stores')
 plt.xlabel('Store')
 plt.ylabel('Count')
 plt.legend(title='Classification')
-plt.savefig('./stats/graphs/productClassification.png')
+plt.savefig('./web/static/graphs/productClassification.png')
 
 df_heatmap = classified_table.pivot_table(index='shortName', columns='Store', values='Classification', aggfunc='first')
 
@@ -140,7 +140,7 @@ sns.heatmap(df_heatmap_encoded, annot=df_heatmap, fmt='', cmap='viridis', cbar=F
 plt.title('Product Classification Heatmap')
 plt.xlabel('Store')
 plt.ylabel('Product')
-plt.savefig('./stats/graphs/classificationHeatmap.png')
+plt.savefig('./web/static/graphs/classificationHeatmap.png')
 
 
 ###
@@ -164,4 +164,4 @@ plt.title('Boxplot of Prices by Store')
 for median in box['medians']:
     median.set_color('black')
 
-plt.savefig('./stats/graphs/boxplot_store.png')
+plt.savefig('./web/static/graphs/boxplot_store.png')
