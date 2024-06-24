@@ -1,7 +1,6 @@
 from flask import Flask, g, render_template
 from flask_sqlalchemy import SQLAlchemy
 import csv
-import json
 import os
 import ast
 
