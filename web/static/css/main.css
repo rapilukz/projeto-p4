@@ -22,3 +22,18 @@
 .form-control {
     width: 80% !important;
 }
+
+.accordion-button {
+    color: #333333ce !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+}
+
+.details-control {
+    width: 50px;
+    text-align: center;
+}
+
+#metrics tbody tr {
+    cursor: pointer;
+}

@@ -110,7 +110,7 @@ def statistics():
     # Load metrics
     with open('../pickles/metrics.pkl', 'rb') as f:
         metrics = pickle.load(f)
-    
+
     return render_template('statistics.html', productSummary_df=productSummary_df, storeSummary_df=storeSummary_df, models=models, metrics=metrics)
 
 
