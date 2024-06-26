@@ -75,8 +75,8 @@ def insert_data():
 
 if not os.path.exists('./instance/products.db'):
     with app.app_context():
-        insert_data()
         db.create_all()
+        insert_data()
         print("Database created")
 
 ## Start of the web application

@@ -28,6 +28,7 @@ python -m flask --app .\main.py --debug run
 ```python
 pip install pandas
 pip install selenium
+pip install seleniumbase
 pip install AmazonCaptcha
 pip install Flask
 pip install flask_sqlalchemy
