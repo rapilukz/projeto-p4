@@ -98,20 +98,14 @@ def graph():
 @app.route('/statistics')
 def statistics():
     # Open the pickle containing the summaries
-    with open('../pickles/productSummary.pkl', 'rb') as f:
-        productSummary_df = pickle.load(f)
-
     with open('../pickles/storeSummary.pkl', 'rb') as f:
         storeSummary_df = pickle.load(f)
-
-    with open('../pickles/models.pkl', 'rb') as f:
-        models = pickle.load(f)
 
     # Load metrics
     with open('../pickles/metrics.pkl', 'rb') as f:
         metrics = pickle.load(f)
 
-    return render_template('statistics.html', productSummary_df=productSummary_df, storeSummary_df=storeSummary_df, models=models, metrics=metrics)
+    return render_template('statistics.html',storeSummary_df=storeSummary_df, metrics=metrics)
 
 
 @app.route('/api/predict', methods=['POST'])
