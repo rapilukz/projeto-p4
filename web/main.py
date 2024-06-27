@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db'
 db = SQLAlchemy(app)
 
-data_folder = "../data"
+data_folder = "./data"
 class Product(db.Model):
     __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -73,7 +73,7 @@ def insert_data():
 
     print("Data insertion complete.")
 
-if not os.path.exists('./instance/products.db'):
+if not os.path.exists('./web/instance/products.db'):
     with app.app_context():
         db.create_all()
         insert_data()
@@ -98,11 +98,11 @@ def graph():
 @app.route('/statistics')
 def statistics():
     # Open the pickle containing the summaries
-    with open('../pickles/storeSummary.pkl', 'rb') as f:
+    with open('./pickles/storeSummary.pkl', 'rb') as f:
         storeSummary_df = pickle.load(f)
 
     # Load metrics
-    with open('../pickles/metrics.pkl', 'rb') as f:
+    with open('./pickles/metrics.pkl', 'rb') as f:
         metrics = pickle.load(f)
 
     return render_template('statistics.html',storeSummary_df=storeSummary_df, metrics=metrics)
@@ -120,7 +120,7 @@ def api_predict():
         models = pickle.load(f)
 
     # Get the unique stores from the store summary
-    with open('../pickles/storeSummary.pkl', 'rb') as f:
+    with open('./pickles/storeSummary.pkl', 'rb') as f:
         storeSummary_df = pickle.load(f)
     stores = storeSummary_df['store'].unique()
 

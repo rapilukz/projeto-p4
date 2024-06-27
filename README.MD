@@ -2,12 +2,12 @@
 Um Web scrapper a 6 sites que vai pegar 20 produtos em cada site e no fim juntar tudo num ficheiro .csv
 
 ### Sites
-- [x] [Amazon](https://www.amazon.com/) (Gabriel)
-- [x] [PCDiga](https://www.pcdiga.com/) (Sebastian)
-- [x] [Nanochip](https://nanochip.pt/) (Pablo)
-- [x] [Pc Componentes](https://www.pccomponentes.pt/) (Bryan)
-- [x] [Chip 7](https://chip7.pt/) (Sebastian)
-- [x] [Worten](https://www.worten.pt/) (Gabriel)
+- [x] [Amazon](https://www.amazon.com/)
+- [x] [PCDiga](https://www.pcdiga.com/)
+- [x] [Nanochip](https://nanochip.pt/)
+- [x] [Pc Componentes](https://www.pccomponentes.pt/)
+- [x] [Chip 7](https://chip7.pt/)
+- [x] [Worten](https://www.worten.pt/)
 
 ### Parte 2 - Machine Learning/Graphs
 Implementação de Gráficos com base dos dados recolhidos dos csvs.
@@ -18,9 +18,8 @@ Criação de uma web app para mostrar todos os dados recolhidos anteriormento us
 
 Para correr a app em dev:
 ```
-cd web
 py -3 -m venv .venv
-python -m flask --app .\main.py --debug run
+python -m flask --app .\web\main.py --debug run
 ``` 
 
 ### Package Necessárias
