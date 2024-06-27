@@ -116,7 +116,7 @@ def api_predict():
     model_name = data.get('model')
 
     # Load the models from the pickle file
-    with open('../pickles/models.pkl', 'rb') as f:
+    with open('./pickles/models.pkl', 'rb') as f:
         models = pickle.load(f)
 
     # Get the unique stores from the store summary
